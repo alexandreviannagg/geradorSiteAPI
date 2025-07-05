@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/css/mainStyle.css"> 
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/variaveis.css">
+    <title>Gerador de sites</title>
+</head>
+<body>
+    <header>
+        <div id="gerar-controle">
+            <button class="botoes-gerar-controles" id="gerar-cabecalho">Gerar cabeçalho</button>
+            <button class="botoes-gerar-controles" id="gerar-menu">Gerar menu</button>
+            <button class="botoes-gerar-controles" id="gerar-galeria">Gerar galeria</button>
+            <button class="botoes-gerar-controles" id="gerar-formulario">Gerar formulário</button>
+            <button class="botoes-gerar-controles" id="gerar-rodape">Gerar rodapé</button>
+            <button class="botoes-gerar-controles" id="gerar-api">Gerar api</button>
+        </div>
+    </header>
+
+    <div id="container-geral">
+        <div id="container-controles" >
+           
+            <h3 class="titulo-editor">Editor</h3>
+
+            <div id="container-controles--editor">
+                <!--FICA OS CONTROLES-->
+                
+            
+
+
+            </div>
+            
+
+            
+        </div>
+            
+
+        <div id="container-site--gerado" >
+            <div id="cabecalho">
+                <div class="img-cabecalho">
+                    
+                </div>
+                <div id="texto-container-cabecalho">
+                    <h1 id="texto-cabecalho" class="texto-cabecalho" style="align-items: flex-center;"></h1>
+                </div>
+
+                <form action="" id="form-cabecalho">
+                    
+                </form>
+            </div>
+
+            <div id="menu">
+                
+                <div id="titulo-menu"><h2></h2></div>
+                <div id="img-menu" style="display: flex;"></div>
+                <div id="itens-menu" style="display: flex;"></div>
+            </div>
+
+            <div id="galeria" ></div>
+
+            <div id="api">
+                <div id="api-dados"></div>
+            </div>
+
+            <div id="formulario">
+                <div id="titulo-formulario"></div>
+                <div id="campos-formulario"></div>
+            </div>
+
+            <footer id="rodape">
+
+            </footer>
+
+            <div class="botoes-site-geral">
+                <button id="btn-salvar-site" class="btn-salvar--excluir--controles">Salvar Site</button>
+                <button id="btn-limpar-site" class="btn-salvar--excluir--controles">Limpar Site</button>
+                <button id="btn-carregar-site" class="btn-salvar--excluir--controles">Carregar Site</button>
+            </div>
+
+
+                
+        </div>
+    </div>
+
+
+    <!-- JS dos controles -->
+    <script type="module" src="./assets/js/gerar-controles/gerarControlesCabecalho.js"></script>
+    <script type="module" src="./assets/js/gerar-controles/GerarControlesMenu.js"></script>
+    <script type="module" src="./assets/js/gerar-controles/gerarControlesGaleria.js"></script>
+    <script type="module" src="./assets/js/gerar-controles/gerarControlesForm.js"></script>
+    <script type="module" src="./assets/js/gerar-controles/gerarControlesRodape.js"></script>
+    <script type="module" src="./assets/js/gerar-controles/gerarControlesAPI.js"></script>
+
+
+    <script src="./assets/js/API/enviarDadosAPI.js"></script>
+
+    <!-- JS da geração do site -->
+    <script type="module" src="./assets/js/gerar-site/gerarCabecalho.js"></script>
+    <script type="module" src="./assets/js/gerar-site/gerarMenu.js"></script>
+    <script type="module" src="./assets/js/gerar-site/gerarGaleria.js"></script>
+    <script type="module" src="./assets/js/gerar-site/gerarForm.js"></script>
+    <script type="module" src="./assets/js/gerar-site/gerarRodape.js"></script>
+
+    <script type="module" src="./assets/js/geral.js"></script>
+
+    <script>
+        function adicionarEventosBotoes() {
+            const containerSite = document.getElementById("container-site--gerado");
+
+            
+            const btnSalvar = document.getElementById("btn-salvar-site");
+            if (btnSalvar) {
+            btnSalvar.addEventListener("click", () => {
+                const conteudo = containerSite.innerHTML;
+                localStorage.setItem("siteSalvo", conteudo);
+                alert("Site salvo com sucesso!");
+            });
+            }
+
+           
+            const btnCarregar = document.getElementById("btn-carregar-site");
+            if (btnCarregar) {
+            btnCarregar.addEventListener("click", () => {
+                const conteudoSalvo = localStorage.getItem("siteSalvo");
+                if (conteudoSalvo) {
+                containerSite.innerHTML = conteudoSalvo;
+                alert("Site carregado com sucesso!");
+                adicionarEventosBotoes();
+                } else {
+                alert("Nenhum conteúdo salvo encontrado.");
+                }
+            });
+            }
+
+            
+            const btnLimpar = document.getElementById("btn-limpar-site");
+            if (btnLimpar) {
+            btnLimpar.addEventListener("click", () => {
+                if (confirm("Tem certeza que deseja limpar o site gerado?")) {
+                containerSite.innerHTML = `
+                    <div id="cabecalho">
+                    <div class="img-cabecalho"></div>
+                    <div id="texto-container-cabecalho">
+                        <h1 id="texto-cabecalho" class="texto-cabecalho" style="align-items: flex-center;"></h1>
+                    </div>
+                    <form action="" id="form-cabecalho"></form>
+                    </div>
+
+                    <div id="menu">
+                    <div id="titulo-menu"><h2></h2></div>
+                    <div id="img-menu" style="display: flex;"></div>
+                    <div id="itens-menu" style="display: flex;"></div>
+                    </div>
+
+                    <div id="galeria"></div>
+
+                    <div id="formulario">
+                    <div id="titulo-formulario"></div>
+                    <div id="campos-formulario"></div>
+                    </div>
+
+                    <footer id="rodape"></footer>
+
+                    <div class="botoes-site-geral" style="margin-top: 20px;">
+                    <button id="btn-salvar-site" class="btn-salvar--excluir--controles">Salvar Site</button>
+                    <button id="btn-carregar-site" class="btn-salvar--excluir--controles">Carregar Site</button>
+                    <button id="btn-limpar-site" class="btn-salvar--excluir--controles">Limpar Site</button>
+                    </div>
+                `;
+
+                adicionarEventosBotoes();
+                }
+            });
+            }
+        }
+
+        adicionarEventosBotoes();
+        </script>
+
+</body>
+</html>
